@@ -8,6 +8,7 @@ package net.gyroninja.Sewers;
 
 import java.util.Random;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 
 /**
  *
@@ -15,8 +16,10 @@ import org.bukkit.Location;
  */
 public class SewerGenerator implements SewerPart {
 
-	public void generate(Location start, int length, Random gen) {
+	public void generate(Location start, int length, BlockFace bf, Random gen) {
 
-		
+		SewerManhole manhole = new SewerManhole();
+
+		manhole.generate(start, gen.nextInt(15) + 20, null, gen);
 	}
 }
