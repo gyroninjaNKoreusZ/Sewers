@@ -8,6 +8,7 @@ package net.gyroninja.Sewers;
 
 import java.util.Random;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 
 /**
  *
@@ -15,5 +16,5 @@ import org.bukkit.Location;
  */
 public interface SewerPart {
 
-	public abstract void generate(Location start, int length, Random gen);
+	public abstract void generate(Location start, int length, BlockFace bf, Random gen);
 }
