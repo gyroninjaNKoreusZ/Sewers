@@ -7,6 +7,8 @@
 package net.gyroninja.Sewers;
 
 import java.util.Random;
+import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -35,10 +37,12 @@ public class SewersListener implements Listener {
 		//Replace with config value (1 in 100 chunks generates sewer)
 		if (gen.nextInt(100) == 0) {
 
-			SewerGenerator sewerGenerator = new SewerGenerator();
+			SewerGenerator generator = new SewerGenerator();
+
+			Location start = event.getWorld().getHighestBlockAt(event.getChunk().getBlock(gen.nextInt(16), 0, gen.nextInt(16)).getLocation()).getLocation();
 
 			//Replace with config value (size 5 - 50 segments)
-			sewerGenerator.generate(event.getWorld().getHighestBlockAt(event.getChunk().getBlock(gen.nextInt(16), 0, gen.nextInt(16)).getLocation()).getLocation(), gen.nextInt(45) + 5, gen);
+			generator.generate(start, gen.nextInt(45) + 5, null, gen);
 		}
 	}
 }
