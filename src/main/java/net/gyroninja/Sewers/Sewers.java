@@ -6,11 +6,19 @@
 
 package net.gyroninja.Sewers;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
 /**
  *
  * @author gyroninja
  */
-public class Sewers {
 
-	
+public class Sewers extends JavaPlugin {
+
+	@Override
+	public void onEnable() {
+
+		Bukkit.getPluginManager().registerEvents(new SewersListener(), this);
+	}
 }
