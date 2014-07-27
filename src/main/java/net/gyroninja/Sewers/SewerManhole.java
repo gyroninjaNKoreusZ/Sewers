@@ -23,9 +23,9 @@ public class SewerManhole implements SewerPart {
 		0, 1, 1, -2
 	};
 
-	public void generate(Location start, int length, BlockFace bf, Random gen) {
+	public Block generate(Block start, int length, BlockFace bf, Random gen) {
 
-		Block centerBlock = start.getBlock();
+		Block centerBlock = start;
 
 		for (int i = 0; i < length; centerBlock = centerBlock.getRelative(BlockFace.DOWN), i++) {
 
@@ -69,5 +69,7 @@ public class SewerManhole implements SewerPart {
 				centerBlock.getRelative(adjacent).setData((byte) gen.nextInt(3));
 			}
 		}
+
+		return centerBlock;
 	}
 }
