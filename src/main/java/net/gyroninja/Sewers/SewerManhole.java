@@ -9,6 +9,7 @@ package net.gyroninja.Sewers;
 import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 /**
@@ -17,22 +18,55 @@ import org.bukkit.block.BlockFace;
  */
 public class SewerManhole implements SewerPart {
 
+	private int[] ladderDataOffset = new int[] {
+
+		0, 1, 1, -2
+	};
+
 	public void generate(Location start, int length, BlockFace bf, Random gen) {
 
-		for (int i = 0; i < length; i++) {
+		Block centerBlock = start.getBlock();
+
+		for (int i = 0; i < length; centerBlock = centerBlock.getRelative(BlockFace.DOWN), i++) {
 
 			if (i == 0) {
 
-				start.getBlock().setType(Material.IRON_FENCE);
+				for (BlockFace adjacent : BlockFace.values()) {
+
+					if (adjacent == BlockFace.UP || adjacent == BlockFace.DOWN) {
+
+						continue;
+					}
+
+					if (adjacent == BlockFace.SELF) {
+
+						centerBlock.setType(Material.IRON_FENCE);
+
+						break;
+					}
+
+					//Clear air above sewer hole
+					centerBlock.getRelative(adjacent).getRelative(BlockFace.UP).setType(Material.AIR);
+				}
 
 				//TODO Add location to file
 			}
 
 			else {
 
-				start.getBlock().setType(Material.LADDER);
+				centerBlock.setType(Material.LADDER);
+				centerBlock.setData((byte) (bf.ordinal() + ladderDataOffset[bf.ordinal()]));
+			}
 
-				//TODO pass blockface instead of null, set data of ladder according to block face
+			for (BlockFace adjacent : BlockFace.values()) {
+
+				if (adjacent == BlockFace.UP || adjacent == BlockFace.DOWN || adjacent == BlockFace.SELF) {
+
+					continue;
+				}
+
+				centerBlock.getRelative(adjacent).setType(Material.SMOOTH_BRICK);
+				centerBlock.getRelative(adjacent).setData((byte) gen.nextInt(3));
 			}
 		}
 	}
