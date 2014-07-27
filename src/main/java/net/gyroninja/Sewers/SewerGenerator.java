@@ -20,6 +20,6 @@ public class SewerGenerator implements SewerPart {
 
 		SewerManhole manhole = new SewerManhole();
 
-		manhole.generate(start, gen.nextInt(15) + 20, null, gen);
+		manhole.generate(start, gen.nextInt(15) + 20, BlockFace.values()[gen.nextInt(4)], gen);
 	}
 }
